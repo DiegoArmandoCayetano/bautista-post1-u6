@@ -2,19 +2,23 @@ package com.universidad.antipatrones;
 
 public class Main {
     public static void main(String[] args) {
-        GestorBiblioteca gestor = new GestorBiblioteca();
 
-        gestor.agregarLibro("L01", "Clean Code", "Robert Martin");
-        gestor.agregarLibro("L02", "Design Patterns", "Gang of Four");
+        CatalogoLibros catalogo = new CatalogoLibros();
+        RegistroSocios registro = new RegistroSocios();
+        ServicioPrestamos prestamos = new ServicioPrestamos(catalogo, registro);
+        GeneradorReportes reportes = new GeneradorReportes(catalogo, registro, prestamos);
 
-        gestor.registrarSocio("S01", "Ana Torres", "ana@uni.edu");
+        catalogo.agregar(new Libro("L01", "Clean Code", "Robert Martin"));
+        catalogo.agregar(new Libro("L02", "Design Patterns", "Gang of Four"));
 
-        gestor.realizarPrestamo("L01", "S01");
+        registro.registrar(new Socio("S01", "Ana Torres", "ana@uni.edu"));
 
-        gestor.imprimirReporteCompleto();
+        prestamos.prestar("L01", "S01");
 
-        gestor.devolverLibro("L01");
+        reportes.imprimirReporteCompleto();
 
-        gestor.imprimirReporteCompleto();
+        prestamos.devolver("L01");
+
+        reportes.imprimirReporteCompleto();
     }
 }
